@@ -1,0 +1,213 @@
+﻿<Window x:Class="WPF_TP1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_TP1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="500">
+
+    <Grid Background="White">
+
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="Draw">
+                    <MenuItem x:Name="StartDrawMenu" Header="Start draw" Click="StartDrawMenu_Click"></MenuItem>
+                    <MenuItem x:Name="StartMoveMenu" Header="Start move" Click="StartMoveMenu_Click"></MenuItem>
+                    <MenuItem x:Name="StopDrawMenu" Header="Stop draw" Click="StopDrawMenu_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Name="AboutMenu" Header="About" Click="AboutMenu_Click">
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <Canvas x:Name="DrawCanvas" Width="500" Height="400" Margin="0,20,0,0" 
+                Background="Transparent" Visibility="Collapsed"
+                MouseDown="DrawCanvas_MouseDown"
+                MouseMove="DrawCanvas_MouseMove">
+            <Path Stroke="Blue" StrokeThickness="1">
+                <Path.Data>
+                    <PathGeometry Figures="{DynamicResource PathFigure}"></PathGeometry>
+                </Path.Data>
+            </Path>
+        </Canvas>
+        
+        <Rectangle x:Name="RectangleItem" Height="100" Width="100" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="RectangleAnimationRotateTransform" Angle="0" CenterX="50" CenterY="50"></RotateTransform>
+                    <ScaleTransform x:Name="RectangleAnimationScaleTransform" CenterX="50" CenterY="50"></ScaleTransform>
+                    <TranslateTransform x:Name="RectangleAnimationMoveTransform" X="0" Y="0"></TranslateTransform>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+            <Rectangle.Resources>
+                <Storyboard x:Key="RectangleScaleTransformStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="RectangleAnimationScaleTransform"
+                                     RepeatBehavior="Forever"
+                                     Storyboard.TargetProperty="ScaleX"
+                                     AutoReverse="True"
+                                     To="3"/>
+                    <DoubleAnimation Storyboard.TargetName="RectangleAnimationScaleTransform"
+                                     RepeatBehavior="Forever"
+                                     Storyboard.TargetProperty="ScaleY"
+                                     AutoReverse="True"
+                                     To="3"/>
+                </Storyboard>
+                <Storyboard x:Key="RectangleRotateTransformStoryBoard">
+                    <DoubleAnimation Storyboard.TargetName="RectangleAnimationRotateTransform"
+                                     RepeatBehavior="Forever"
+                                     Storyboard.TargetProperty="Angle"
+                                     By="10"
+                                     To="360"/>
+                </Storyboard>
+                <Storyboard x:Key="RectangleMoveTransformStoryBoard">
+                    <DoubleAnimationUsingPath Storyboard.TargetName="RectangleAnimationMoveTransform" 
+                                              Storyboard.TargetProperty="X" 
+                                              Source="X" 
+                                              Duration="0:0:05" 
+                                              RepeatBehavior="Forever" 
+                                              AutoReverse="True">
+                        <DoubleAnimationUsingPath.PathGeometry>
+                            <PathGeometry Figures="{DynamicResource PathFigure}"/>
+                        </DoubleAnimationUsingPath.PathGeometry>
+                    </DoubleAnimationUsingPath>
+
+                    <DoubleAnimationUsingPath Storyboard.TargetName="RectangleAnimationMoveTransform" 
+                                              Storyboard.TargetProperty="Y" 
+                                              Source="Y" 
+                                              Duration="0:0:05" 
+                                              RepeatBehavior="Forever" 
+                                              AutoReverse="True">
+                        <DoubleAnimationUsingPath.PathGeometry>
+                            <PathGeometry Figures="{DynamicResource PathFigure}"/>
+                        </DoubleAnimationUsingPath.PathGeometry>
+                    </DoubleAnimationUsingPath>
+                </Storyboard>
+            </Rectangle.Resources>
+        </Rectangle>
+
+
+
+        <Ellipse x:Name="CircleItem" Height="100" Width="100" Stroke="Black" StrokeDashArray="5,5" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="CircleAnimationRotateTransform" Angle="0" CenterX="50" CenterY="50"></RotateTransform>
+                    <ScaleTransform x:Name="CircleAnimationScaleTransform" CenterX="50" CenterY="50"></ScaleTransform>
+                    <TranslateTransform x:Name="CircleAnimationMoveTransform" X="0" Y="0"></TranslateTransform>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+            <Ellipse.Resources>
+                <Storyboard x:Key="CircleScaleTransformStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="CircleAnimationScaleTransform"
+                                     RepeatBehavior="Forever"
+                                     Storyboard.TargetProperty="ScaleX"
+                                     AutoReverse="True"
+                                     To="3"/>
+                    <DoubleAnimation Storyboard.TargetName="CircleAnimationScaleTransform"
+                                     RepeatBehavior="Forever"
+                                     Storyboard.TargetProperty="ScaleY"
+                                     AutoReverse="True"
+                                     To="3"/>
+                </Storyboard>
+                <Storyboard x:Key="CircleRotateTransformStoryBoard">
+                    <DoubleAnimation Storyboard.TargetName="CircleAnimationRotateTransform"
+                                 RepeatBehavior="Forever"
+                                 Storyboard.TargetProperty="Angle"
+                                 By="10"
+                                 To="360"/>
+                </Storyboard>
+                <Storyboard x:Key="CircleMoveTransformStoryBoard">
+                    <DoubleAnimationUsingPath Storyboard.TargetName="CircleAnimationMoveTransform" 
+                                              Storyboard.TargetProperty="X" 
+                                              Source="X" 
+                                              Duration="0:0:05" 
+                                              RepeatBehavior="Forever" 
+                                              AutoReverse="True">
+                        <DoubleAnimationUsingPath.PathGeometry>
+                            <PathGeometry Figures="{DynamicResource PathFigure}"/>
+                        </DoubleAnimationUsingPath.PathGeometry>
+                    </DoubleAnimationUsingPath>
+
+                    <DoubleAnimationUsingPath Storyboard.TargetName="CircleAnimationMoveTransform" 
+                                              Storyboard.TargetProperty="Y" 
+                                              Source="Y" 
+                                              Duration="0:0:05" 
+                                              RepeatBehavior="Forever" 
+                                              AutoReverse="True">
+                        <DoubleAnimationUsingPath.PathGeometry>
+                            <PathGeometry Figures="{DynamicResource PathFigure}"/>
+                        </DoubleAnimationUsingPath.PathGeometry>
+                    </DoubleAnimationUsingPath>
+                </Storyboard>
+            </Ellipse.Resources>
+        </Ellipse>
+
+        <Image x:Name="ImageItem" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Source="Images/lena30.jpg">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="ImageAnimationRotateTransform" Angle="0" CenterX="50" CenterY="50"></RotateTransform>
+                    <ScaleTransform x:Name="ImageAnimationScaleTransform" CenterX="50" CenterY="50"></ScaleTransform>
+                    <TranslateTransform x:Name="ImageAnimationMoveTransform" X="0" Y="0"></TranslateTransform>
+                </TransformGroup>
+            </Image.RenderTransform>
+            <Image.Resources>
+                <Storyboard x:Key="ImageScaleTransformStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="ImageAnimationScaleTransform"
+                                     RepeatBehavior="Forever"
+                                     Storyboard.TargetProperty="ScaleX"
+                                     AutoReverse="True"
+                                     To="3"/>
+                    <DoubleAnimation Storyboard.TargetName="ImageAnimationScaleTransform"
+                                     RepeatBehavior="Forever"
+                                     Storyboard.TargetProperty="ScaleY"
+                                     AutoReverse="True"
+                                     To="3"/>
+                </Storyboard>
+                <Storyboard x:Key="ImageRotateTransformStoryBoard">
+                    <DoubleAnimation Storyboard.TargetName="ImageAnimationRotateTransform"
+                                 RepeatBehavior="Forever"
+                                 Storyboard.TargetProperty="Angle"
+                                 By="10"
+                                 To="360"/>
+                </Storyboard>
+                <Storyboard x:Key="ImageMoveTransformStoryBoard">
+                    <DoubleAnimationUsingPath Storyboard.TargetName="ImageAnimationMoveTransform" 
+                                              Storyboard.TargetProperty="X" 
+                                              Source="X" 
+                                              Duration="0:0:05" 
+                                              RepeatBehavior="Forever" 
+                                              AutoReverse="True">
+                        <DoubleAnimationUsingPath.PathGeometry>
+                            <PathGeometry Figures="{DynamicResource PathFigure}"/>
+                        </DoubleAnimationUsingPath.PathGeometry>
+                    </DoubleAnimationUsingPath>
+
+                    <DoubleAnimationUsingPath Storyboard.TargetName="ImageAnimationMoveTransform" 
+                                              Storyboard.TargetProperty="Y" 
+                                              Source="Y" 
+                                              Duration="0:0:05" 
+                                              RepeatBehavior="Forever" 
+                                              AutoReverse="True">
+                        <DoubleAnimationUsingPath.PathGeometry>
+                            <PathGeometry Figures="{DynamicResource PathFigure}"/>
+                        </DoubleAnimationUsingPath.PathGeometry>
+                    </DoubleAnimationUsingPath>
+                </Storyboard>
+            </Image.Resources>
+        </Image>
+
+        <TextBlock Name="DrawIndication"
+                   Text="You can now drawing in the window."
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Bottom"
+                   Margin="5"
+                   Foreground="Red"
+                   Visibility="Collapsed">
+        </TextBlock>
+
+    </Grid>
+    <Window.Resources>
+        <PathFigureCollection x:Key="PathFigure">
+        </PathFigureCollection>
+    </Window.Resources>
+</Window>
